@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Winner{% endblock %}
+{% block content %}
+<div class="auth-card wide">
+  <h2>Winner Announcement</h2>
+  <p><strong>Auction:</strong> {{ auction.title }}</p>
+  <p><strong>Winner:</strong> {{ winner_user.username }} ({{ winner_user.wallet_address }})</p>
+  <p><strong>Winning Bid:</strong> {{ winning_bid.revealed_amount }}</p>
+  <p><strong>Total Revealed Bids:</strong> {{ total_revealed }}</p>
+  <p>This result is computed from revealed commitments only.</p>
+</div>
+{% endblock %}

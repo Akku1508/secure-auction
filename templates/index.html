@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Home | DAPV Auction{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Decentralized Privacy-Preserving Auction Platform</h1>
+  <p>Pedersen commitments + anonymous signatures + reveal verification workflow.</p>
+</section>
+
+<h2>Live Auctions</h2>
+<div class="grid">
+  {% for auction in auctions %}
+    <article class="card">
+      <h3>{{ auction.title }}</h3>
+      <p>{{ auction.description }}</p>
+      <p><strong>Status:</strong> {{ auction.status }}</p>
+      <p><strong>Minimum Bid:</strong> {{ auction.min_bid }}</p>
+      <a class="btn" href="{{ url_for('auction_detail', auction_id=auction.id) }}">Open</a>
+    </article>
+  {% else %}
+    <p>No auctions yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}
