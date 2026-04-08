@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Auction Detail{% endblock %}
+{% block content %}
+<article class="card">
+  <h2>{{ auction.title }}</h2>
+  <p>{{ auction.description }}</p>
+  <p><strong>Status:</strong> {{ auction.status }}</p>
+  <p><strong>Min Bid:</strong> {{ auction.min_bid }}</p>
+  <p><strong>Ends at:</strong> {{ auction.end_time }} UTC</p>
+  <p><strong>Participants:</strong> {{ participants }}</p>
+</article>
+
+{% if auction.status == 'BIDDING_OPEN' %}
+<div class="auth-card wide">
+  <h3>Commit Bid</h3>
+  <form method="post">
+    <label>Your Bid Amount</label>
+    <input type="number" name="amount" min="{{ auction.min_bid }}" required>
+    <button class="btn" type="submit">Commit</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="auth-card wide">
+  <h3>Reveal Bid</h3>
+  <form method="post" action="{{ url_for('reveal_bid', auction_id=auction.id) }}">
+    <label>Bid Amount</label>
+    <input type="number" name="amount" required>
+    <label>Nonce (saved during commit)</label>
+    <input type="text" name="nonce" required>
+    <button class="btn" type="submit">Reveal</button>
+  </form>
+</div>
+
+<div class="auth-card wide">
+  <h3>Bids (Commitment Layer)</h3>
+  <table>
+    <tr><th>Bidder ID</th><th>Commitment Hash</th><th>Revealed</th><th>Revealed Amount</th></tr>
+    {% for bid in bids %}
+      <tr>
+        <td>{{ bid.bidder_id }}</td>
+        <td><small>{{ bid.committed_amount_hash }}</small></td>
+        <td>{{ 'Yes' if bid.is_revealed else 'No' }}</td>
+        <td>{{ bid.revealed_amount if bid.is_revealed else '-' }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<a class="btn" href="{{ url_for('winner', auction_id=auction.id) }}">Check Winner</a>
+{% endblock %}

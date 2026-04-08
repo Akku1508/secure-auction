@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome, {{ current_user.username }}</h2>
+<p><strong>Wallet:</strong> {{ current_user.wallet_address }}</p>
+
+<section>
+  <h3>My Auctions</h3>
+  <div class="grid">
+    {% for auction in my_auctions %}
+      <article class="card">
+        <h4>{{ auction.title }}</h4>
+        <p>{{ auction.status }}</p>
+        <a class="btn" href="{{ url_for('auction_detail', auction_id=auction.id) }}">Manage</a>
+      </article>
+    {% else %}
+      <p>No auctions created by you yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h3>My Bids</h3>
+  <div class="grid">
+    {% for bid in my_bids %}
+      <article class="card">
+        <p>Auction #{{ bid.auction_id }}</p>
+        <p>Commitment: <small>{{ bid.committed_amount_hash[:18] }}...</small></p>
+        <p>Revealed: {{ 'Yes' if bid.is_revealed else 'No' }}</p>
+      </article>
+    {% else %}
+      <p>You have no bids yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
