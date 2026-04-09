@@ -23,8 +23,7 @@ body {
 }
 .brand { color: var(--accent); text-decoration: none; font-weight: 700; }
 nav a { color: var(--text); text-decoration: none; margin-left: 1rem; }
-.container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-.hero { margin-bottom: 2rem; }
+.container { max-width: 1120px; margin: 2rem auto; padding: 0 1rem; }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -35,11 +34,12 @@ nav a { color: var(--text); text-decoration: none; margin-left: 1rem; }
   border: 1px solid #263356;
   border-radius: 16px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
-.auth-card { max-width: 520px; margin: 1rem auto; }
+.auth-card { max-width: 600px; margin: 1rem auto; }
 .auth-card.wide { max-width: none; }
 label { display: block; margin-top: .75rem; color: var(--muted); }
-input, textarea, button {
+input, textarea, button, select {
   width: 100%;
   margin-top: .35rem;
   padding: .7rem;
@@ -51,7 +51,8 @@ input, textarea, button {
 .btn {
   display: inline-block;
   width: auto;
-  margin-top: 1rem;
+  margin-top: .8rem;
+  margin-right: .5rem;
   background: var(--accent);
   color: #031126;
   border: none;
@@ -59,7 +60,18 @@ input, textarea, button {
   border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
+  cursor: pointer;
 }
+.small-link {
+  color: var(--muted);
+  margin-top: 1rem;
+}
+.small-link a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.activity-list { padding-left: 1.2rem; }
+.activity-list li { margin-bottom: .45rem; }
 table { width: 100%; border-collapse: collapse; }
 th, td { border-bottom: 1px solid #2a385d; padding: .5rem; text-align: left; }
 .flash { padding: .7rem 1rem; border-radius: 10px; margin: .5rem 0; }

@@ -1,36 +1,31 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Profile Dashboard{% endblock %}
 {% block content %}
-<h2>Welcome, {{ current_user.username }}</h2>
-<p><strong>Wallet:</strong> {{ current_user.wallet_address }}</p>
+<div class="card">
+  <h2>Profile Dashboard</h2>
+  <p><strong>Full Name:</strong> {{ current_user.full_name }}</p>
+  <p><strong>Username:</strong> {{ current_user.username }}</p>
+  <p><strong>Email:</strong> {{ current_user.email }}</p>
+  <p><strong>Phone:</strong> {{ current_user.phone }}</p>
+  <p><strong>Role:</strong> {{ current_user.role }}</p>
+  <p><strong>Wallet:</strong> {{ current_user.wallet_address }}</p>
+</div>
 
-<section>
-  <h3>My Auctions</h3>
-  <div class="grid">
-    {% for auction in my_auctions %}
-      <article class="card">
-        <h4>{{ auction.title }}</h4>
-        <p>{{ auction.status }}</p>
-        <a class="btn" href="{{ url_for('auction_detail', auction_id=auction.id) }}">Manage</a>
-      </article>
+<div class="card">
+  <h3>Past Activity</h3>
+  <ul class="activity-list">
+    {% for item in activities %}
+      <li><strong>{{ item.time }}</strong> — {{ item.text }}</li>
     {% else %}
-      <p>No auctions created by you yet.</p>
+      <li>No activity yet.</li>
     {% endfor %}
-  </div>
-</section>
+  </ul>
+</div>
 
-<section>
-  <h3>My Bids</h3>
-  <div class="grid">
-    {% for bid in my_bids %}
-      <article class="card">
-        <p>Auction #{{ bid.auction_id }}</p>
-        <p>Commitment: <small>{{ bid.committed_amount_hash[:18] }}...</small></p>
-        <p>Revealed: {{ 'Yes' if bid.is_revealed else 'No' }}</p>
-      </article>
-    {% else %}
-      <p>You have no bids yet.</p>
-    {% endfor %}
-  </div>
-</section>
+{% if current_user.role == 'bidder' %}
+  <a class="btn" href="{{ url_for('bidder_auctions') }}">View Auctions as Bidder</a>
+{% endif %}
+{% if current_user.role == 'auctioneer' %}
+  <a class="btn" href="{{ url_for('auctioneer_auctions') }}">Open Auctioneer Panel</a>
+{% endif %}
 {% endblock %}

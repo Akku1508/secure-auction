@@ -2,7 +2,7 @@
 {% block title %}Create Auction{% endblock %}
 {% block content %}
 <div class="auth-card wide">
-  <h2>Create Auction</h2>
+  <h2>Create Auction (Auctioneer)</h2>
   <form method="post">
     <label>Title</label>
     <input type="text" name="title" required>
@@ -10,13 +10,19 @@
     <label>Description</label>
     <textarea name="description" rows="4"></textarea>
 
-    <label>Minimum Bid</label>
-    <input type="number" name="min_bid" min="1" required>
+    <label>Bid Value Options (comma separated, e.g. 100,200,300)</label>
+    <input type="text" name="bid_values" required>
 
-    <label>End Time (UTC)</label>
-    <input type="datetime-local" name="end_time" required>
+    <label>Max number of bidders</label>
+    <input type="number" name="max_bidders" min="1" value="10" required>
 
-    <button class="btn" type="submit">Create</button>
+    <label>Minimum auctioneers required before auction start</label>
+    <input type="number" name="min_auctioneers_required" min="1" value="2" required>
+
+    <label>Shamir threshold k</label>
+    <input type="number" name="shamir_k" min="1" value="2" required>
+
+    <button class="btn" type="submit">Create Auction</button>
   </form>
 </div>
 {% endblock %}

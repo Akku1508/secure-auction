@@ -1,12 +1,11 @@
 # DAPV Decentralized Auction Web App (Flask)
 
-A complete starter website for a privacy-preserving decentralized-auction workflow with:
-- User signup/login/logout
-- Auction creation and browsing
-- Commit bid flow (hash commitment)
-- Reveal bid flow (commitment verification)
-- Winner announcement
-- SQLite database via Flask-SQLAlchemy
+Role-based web app for decentralized auction workflow:
+- Login-first entry page
+- Signup with full profile fields + role (`bidder` / `auctioneer`)
+- Profile dashboard with past activity
+- Bidder flow: see all auctions, participate, generate keys, choose bid value, submit with auctioneer-shared secret key
+- Auctioneer flow: create auction, set bidder limit + minimum auctioneers + Shamir threshold `k`, join multi-auctioneer auctions, start only when minimum auctioneers are present, share secret keys for bidders
 
 ## Run locally
 
@@ -19,11 +18,3 @@ flask --app app.py run
 ```
 
 Open http://127.0.0.1:5000
-
-## Notes
-
-This is an application-layer simulation of the cryptographic protocol and decentralized workflow. It provides a production-style web UX skeleton that you can extend with:
-- your ring signature implementation,
-- Pedersen commitment over EC points,
-- OT/threshold logic,
-- Ethereum/Web3 smart contract integration.

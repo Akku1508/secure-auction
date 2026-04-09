@@ -6,9 +6,12 @@
   <form method="post">
     <label>Username</label>
     <input type="text" name="username" required>
+
     <label>Password</label>
     <input type="password" name="password" required>
+
     <button class="btn" type="submit">Login</button>
   </form>
+  <p class="small-link">New here? <a href="{{ url_for('signup') }}">Go to Signup</a></p>
 </div>
 {% endblock %}

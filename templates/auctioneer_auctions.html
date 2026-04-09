@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Auctioneer Panel{% endblock %}
+{% block content %}
+<h2>Auctioneer Panel</h2>
+<p>See all auctions and join as additional auctioneer for multi-auctioneer setup.</p>
+<a class="btn" href="{{ url_for('create_auction') }}">Create New Auction</a>
+
+<div class="grid" style="margin-top: 1rem;">
+  {% for auction in auctions %}
+  <article class="card">
+    <h3>{{ auction.title }}</h3>
+    <p>{{ auction.description }}</p>
+    <p><strong>Status:</strong> {{ auction.status }}</p>
+    <p><strong>Required Auctioneers:</strong> {{ auction.min_auctioneers_required }}</p>
+    <p><strong>Shamir k:</strong> {{ auction.shamir_k }}</p>
+    <a class="btn" href="{{ url_for('auction_detail', auction_id=auction.id) }}">Manage</a>
+  </article>
+  {% else %}
+  <p>No auctions yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -8,15 +8,21 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{{ url_for('home') }}">DAPV Auction</a>
+    <a class="brand" href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('login') }}">DAPV Auction</a>
     <nav>
       {% if current_user.is_authenticated %}
-      <a href="{{ url_for('dashboard') }}">Dashboard</a>
-      <a href="{{ url_for('create_auction') }}">Create Auction</a>
-      <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('dashboard') }}">Profile</a>
+        {% if current_user.role == 'bidder' %}
+          <a href="{{ url_for('bidder_auctions') }}">Bidder Auctions</a>
+        {% endif %}
+        {% if current_user.role == 'auctioneer' %}
+          <a href="{{ url_for('auctioneer_auctions') }}">Auctioneer Panel</a>
+          <a href="{{ url_for('create_auction') }}">Create Auction</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
       {% else %}
-      <a href="{{ url_for('login') }}">Login</a>
-      <a href="{{ url_for('register') }}">Signup</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
       {% endif %}
     </nav>
   </header>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Signup{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Signup</h2>
+  <form method="post">
+    <label>Full Name</label>
+    <input type="text" name="full_name" required>
+
+    <label>Username</label>
+    <input type="text" name="username" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Phone Number</label>
+    <input type="tel" name="phone" required>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <label>Role</label>
+    <select name="role" required>
+      <option value="">Select role</option>
+      <option value="bidder">Bidder</option>
+      <option value="auctioneer">Auctioneer</option>
+    </select>
+
+    <button class="btn" type="submit">Create Account</button>
+  </form>
+  <p class="small-link">Already have account? <a href="{{ url_for('login') }}">Go to Login</a></p>
+</div>
+{% endblock %}
