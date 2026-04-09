@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Profile Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Profile Dashboard</h2>
+  <p><strong>Full Name:</strong> {{ current_user.full_name }}</p>
+  <p><strong>Username:</strong> {{ current_user.username }}</p>
+  <p><strong>Email:</strong> {{ current_user.email }}</p>
+  <p><strong>Phone:</strong> {{ current_user.phone }}</p>
+  <p><strong>Role:</strong> {{ current_user.role }}</p>
+  <p><strong>Wallet:</strong> {{ current_user.wallet_address }}</p>
+</div>
+
+<div class="card">
+  <h3>Past Activity</h3>
+  <ul class="activity-list">
+    {% for item in activities %}
+      <li><strong>{{ item.time }}</strong> — {{ item.text }}</li>
+    {% else %}
+      <li>No activity yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% if current_user.role == 'bidder' %}
+  <a class="btn" href="{{ url_for('bidder_auctions') }}">View Auctions as Bidder</a>
+{% endif %}
+{% if current_user.role == 'auctioneer' %}
+  <a class="btn" href="{{ url_for('auctioneer_auctions') }}">Open Auctioneer Panel</a>
+{% endif %}
+{% endblock %}

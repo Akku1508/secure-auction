@@ -1,0 +1,79 @@
+:root {
+  --bg: #0a1020;
+  --card: #121b33;
+  --muted: #9bb0d3;
+  --text: #ecf2ff;
+  --accent: #32c1ff;
+  --ok: #2ecc71;
+  --err: #ff6464;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(circle at 0 0, #132243, var(--bg));
+  color: var(--text);
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #263356;
+}
+.brand { color: var(--accent); text-decoration: none; font-weight: 700; }
+nav a { color: var(--text); text-decoration: none; margin-left: 1rem; }
+.container { max-width: 1120px; margin: 2rem auto; padding: 0 1rem; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.card, .auth-card {
+  background: var(--card);
+  border: 1px solid #263356;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.auth-card { max-width: 600px; margin: 1rem auto; }
+.auth-card.wide { max-width: none; }
+label { display: block; margin-top: .75rem; color: var(--muted); }
+input, textarea, button, select {
+  width: 100%;
+  margin-top: .35rem;
+  padding: .7rem;
+  border-radius: 10px;
+  border: 1px solid #30426d;
+  background: #0b1530;
+  color: var(--text);
+}
+.btn {
+  display: inline-block;
+  width: auto;
+  margin-top: .8rem;
+  margin-right: .5rem;
+  background: var(--accent);
+  color: #031126;
+  border: none;
+  padding: .65rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+.small-link {
+  color: var(--muted);
+  margin-top: 1rem;
+}
+.small-link a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.activity-list { padding-left: 1.2rem; }
+.activity-list li { margin-bottom: .45rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #2a385d; padding: .5rem; text-align: left; }
+.flash { padding: .7rem 1rem; border-radius: 10px; margin: .5rem 0; }
+.flash.success { background: rgba(46, 204, 113, .15); border: 1px solid var(--ok); }
+.flash.error { background: rgba(255, 100, 100, .15); border: 1px solid var(--err); }

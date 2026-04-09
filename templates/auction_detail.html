@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Auction Detail{% endblock %}
+{% block content %}
+<article class="card">
+  <h2>{{ auction.title }}</h2>
+  <p>{{ auction.description }}</p>
+  <p><strong>Status:</strong> {{ auction.status }}</p>
+  <p><strong>Bid values:</strong> {{ bid_values }}</p>
+  <p><strong>Bidder limit:</strong> {{ bidders|length }} / {{ auction.max_bidders }}</p>
+  <p><strong>Auctioneers present:</strong> {{ auctioneers|length }} / {{ auction.min_auctioneers_required }} (k={{ auction.shamir_k }})</p>
+  <p><strong>Secret key shared:</strong> {{ 'Yes' if auction.secret_keys_shared else 'No' }}</p>
+</article>
+
+{% if current_user.role == 'auctioneer' %}
+<div class="auth-card wide">
+  <h3>Auctioneer Actions</h3>
+  <form method="post" action="{{ url_for('join_as_auctioneer', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Join as Auctioneer</button>
+  </form>
+  <form method="post" action="{{ url_for('start_auction', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Start Auction (needs min auctioneers)</button>
+  </form>
+  <form method="post" action="{{ url_for('close_auction', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Close Auction</button>
+  </form>
+  <form method="post" action="{{ url_for('share_secret_keys', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Share Secret Keys for Bidders</button>
+  </form>
+</div>
+{% endif %}
+
+{% if current_user.role == 'bidder' %}
+<div class="auth-card wide">
+  <h3>Bidder Actions</h3>
+  <form method="post" action="{{ url_for('join_as_bidder', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Participate in Auction</button>
+  </form>
+
+  <form method="post" action="{{ url_for('generate_keys', auction_id=auction.id) }}">
+    <button class="btn" type="submit">Generate Bidder Keys</button>
+  </form>
+
+  <form method="post" action="{{ url_for('submit_bid', auction_id=auction.id) }}">
+    <label>Select Bid Value</label>
+    <select name="bid_value" required>
+      {% for value in bid_values %}
+      <option value="{{ value }}">{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <label>Select Secret Key (available after auctioneer shares)</label>
+    <select name="secret_key_selected" required>
+      <option value="">Select key</option>
+      {% for key in shared_keys %}
+      <option value="{{ key }}">{{ key }}</option>
+      {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">Submit Bid</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="auth-card wide">
+  <h3>Submitted Bids</h3>
+  <table>
+    <tr><th>Bidder ID</th><th>Bid Value Option</th><th>Commitment</th><th>Secret Key</th><th>Time</th></tr>
+    {% for b in bids %}
+      <tr>
+        <td>{{ b.bidder_id }}</td>
+        <td>{{ b.selected_bid_value }}</td>
+        <td><small>{{ b.commitment_hash }}</small></td>
+        <td>{{ b.secret_key_selected or '-' }}</td>
+        <td>{{ b.submitted_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No bids yet.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
